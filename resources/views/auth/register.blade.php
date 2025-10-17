@@ -8,6 +8,18 @@
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
+        
+        <!-- 名前（漢字） -->
+        <div>
+            <label for="real_name">名前（漢字）</label>
+            <input id="real_name" type="text" name="real_name" value="{{ old('real_name') }}" required>
+        </div>
+
+        <!-- 名前（カナ） -->
+        <div>
+            <label for="kana_name">名前（カナ）</label>
+            <input id="kana_name" type="text" name="kana_name" value="{{ old('kana_name') }}" required>
+        </div>
 
         <!-- Email Address -->
         <div class="mt-4">

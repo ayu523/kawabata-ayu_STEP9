@@ -31,12 +31,16 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'real_name' => ['required', 'string', 'max:255'],   // 追加
+            'kana_name' => ['required', 'string', 'max:255'],   // 追加
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'real_name' => $request->real_name,   // 追加
+            'kana_name' => $request->kana_name,   // 追加
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

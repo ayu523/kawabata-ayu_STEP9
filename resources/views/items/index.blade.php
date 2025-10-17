@@ -7,14 +7,38 @@
 <body>
     <h1>商品一覧</h1>
 
-    <ul>
-        @foreach($items as $item)
-            <li>
-                <strong>{{ $item->name }}</strong><br>
-                価格: {{ $item->price }}円<br>
-                説明: {{ $item->description }}
-            </li>
-        @endforeach
-    </ul>
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>商品番号</th>
+                <th>商品名</th>
+                <th>商品説明</th>
+                <th>画像</th>
+                <th>料金(¥)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($items as $item)
+            <tr>
+                <td>{{ $item->id }}</td>
+                <td>
+                    <a href="{{ route('items.show', $item->id) }}">
+                        {{ $item->name }}
+                    </a>
+                </td>
+                <td>{{ $item->name }}</td>
+                <td>{{ $item->description }}</td>
+                <td>
+                    @if($item->image_path)
+                        <img src="{{ asset('storage/' . $item->image_path) }}" width="80">
+                    @else
+                        画像なし
+                    @endif
+                </td>
+                <td>{{ number_format($item->price) }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </body>
 </html>
