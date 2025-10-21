@@ -13,6 +13,7 @@ class Order extends Model
         'user_id',
         'item_id',
         'quantity',
+        'total_price',
     ];
 
     // 商品との関係（1件の注文は1つの商品に属する）

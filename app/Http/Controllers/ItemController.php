@@ -95,10 +95,14 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($id);
         $quantity = (int)$request->input('quantity');
+        // 合計金額
         $total = $item->price * $quantity;
+
+        $user = auth()->user();
 
         // 購入履歴を保存
         Order::create([
+            'user_id' => $user->id,
             'item_id' => $item->id,
             'quantity' => $quantity,
             'total_price' => $total,
@@ -109,6 +113,6 @@ class ItemController extends Controller
             'item' => $item,
             'quantity' => $quantity,
             'total' => $total
-        ]);
+        ])->with('success', '購入履歴を保存しました！');
     }
 }
