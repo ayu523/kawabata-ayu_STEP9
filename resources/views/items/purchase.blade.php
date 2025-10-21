@@ -7,19 +7,23 @@
 <body>
     <h1>購入画面</h1>
 
-    <p>商品名：{{ $item->name }}</p>
-    <p>説明：{{ $item->description }}</p>
+    <h2>{{ $item->name }}</h2>
+    <p>{{ $item->description }}</p>
+    <p>価格：¥{{ number_format($item->price) }}</p>
 
-    <form action="#" method="POST">
+    @if($item->image_path)
+        <img src="{{ asset('storage/' . $item->image_path) }}" alt="商品画像" width="150">
+    @endif
+
+    <form action="{{ route('items.storePurchase', $item->id) }}" method="POST">
         @csrf
-        <label>購入個数：</label>
-        <input type="number" name="quantity" min="1" max="10" value="1">
+        <label for="quantity">購入数：</label>
+        <input type="number" name="quantity" id="quantity" value="1" min="1">
         <br><br>
-        <p>金額：¥{{ number_format($item->price) }}</p>
-        <p>残り：200</p>
-        <p>会社：TNG</p>
-
         <button type="submit">購入する</button>
     </form>
+
+    <br>
+    <a href="{{ route('items.index') }}">← 商品一覧に戻る</a>
 </body>
 </html>
