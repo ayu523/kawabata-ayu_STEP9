@@ -1,36 +1,51 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Cytech EC</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+    {{-- ヘッダー --}}
+    <header class="site-header">
+        <div class="header-left">
+            <h1>Cytech EC</h1>
         </div>
-    </body>
+        <nav class="header-nav">
+            <a href="{{ route('items.index') }}">Home</a>
+            <a href="{{ route('mypage.index') }}">マイページ</a>
+
+            @auth
+                <span>ログインユーザー：{{ Auth::user()->name }}</span>
+                {{-- ここをインラインで表示 --}}
+                <form action="{{ route('logout') }}" method="POST" class="logout-form">
+                    @csrf
+                    <button type="submit" class="logout-btn">ログアウト</button>
+                </form>
+            @endauth
+
+            @guest
+                <a href="{{ route('login') }}">ログイン</a>
+                <a href="{{ route('register') }}">新規登録</a>
+            @endguest
+        </nav>
+    </header>
+
+    {{-- コンテンツ部分 --}}
+    <main class="main-content">
+        @yield('content')
+    </main>
+
+    {{-- フッター --}}
+    <footer class="site-footer">
+        <div class="footer-top">
+            <a href="{{ route('contact.index') }}" class="btn-contact">お問い合わせ</a>
+        </div>
+        <div class="footer-links">
+            <a href="{{ route('items.index') }}">Home</a> |
+            <a href="{{ route('mypage.index') }}">マイページ</a>
+        </div>
+        <p class="footer-copy">© 2024 Company, Inc</p>
+    </footer>
+</body>
 </html>

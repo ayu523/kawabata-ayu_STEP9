@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>お問い合わせ完了</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>お問い合わせありがとうございます！</h1>
 
     <p>以下の内容でお問い合わせを受け付けました。</p>
@@ -18,6 +14,5 @@
 
     <br>
     <a href="{{ route('contact.index') }}">お問い合わせフォームへ戻る</a><br>
-    <a href="{{ route('items.index') }}">トップページへ戻る</a>
-</body>
-</html>
+    <a href="{{ route('items.index') }}">トップページへ
+@endsection

@@ -1,40 +1,24 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>お問い合わせ内容確認</title>
-</head>
-<body>
-    <h1>お問い合わせ内容確認</h1>
+@extends('layouts.app')
 
-    <form action="{{ route('contact.send') }}" method="POST">
+@section('content')
+    <h1>購入画面</h1>
+
+    <h2>{{ $item->name }}</h2>
+    <p>{{ $item->description }}</p>
+    <p>価格：¥{{ number_format($item->price) }}</p>
+
+    @if($item->image_path)
+        <img src="{{ asset('storage/' . $item->image_path) }}" alt="商品画像" width="150">
+    @endif
+
+    <form action="{{ route('items.storePurchase', $item->id) }}" method="POST">
         @csrf
-
-        <div>
-            <label>お名前：</label>
-            {{ $inputs['name'] }}
-            <input type="hidden" name="name" value="{{ $inputs['name'] }}">
-        </div>
-
-        <div>
-            <label>メールアドレス：</label>
-            {{ $inputs['email'] }}
-            <input type="hidden" name="email" value="{{ $inputs['email'] }}">
-        </div>
-
-        <div>
-            <label>お問い合わせ内容：</label><br>
-            {!! nl2br(e($inputs['message'])) !!}
-            <input type="hidden" name="message" value="{{ $inputs['message'] }}">
-        </div>
-
-        <br>
-        <button type="submit">送信する</button>
+        <label for="quantity">購入数：</label>
+        <input type="number" name="quantity" id="quantity" value="1" min="1">
+        <br><br>
+        <button type="submit">購入する</button>
     </form>
 
     <br>
-    <form action="{{ route('contact.index') }}" method="GET">
-        <button type="submit">戻る</button>
-    </form>
-</body>
-</html>
+    <a href="{{ route('items.index') }}">← 商品一覧に戻る</a>
+@endsection

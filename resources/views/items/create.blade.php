@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>商品登録</title>
-</head>
-<body>
-    <h1>商品登録フォーム</h1>
+@extends('layouts.app')
 
-    {{-- エラーメッセージ表示 --}}
+@section('content')
+<div class="item-create">
+    <h1>商品登録</h1>
+
+    {{-- エラーメッセージ --}}
     @if ($errors->any())
-        <div style="color: red;">
+        <div class="error-box">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -21,31 +18,35 @@
     <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <div>
-            <label>商品名：</label>
-            <input type="text" name="name" value="{{ old('name') }}">
+        <div class="form-group">
+            <label for="name">商品名</label>
+            <input type="text" id="name" name="name" value="{{ old('name') }}" required>
         </div>
 
-        <div>
-            <label>価格：</label>
-            <input type="number" name="price" value="{{ old('price') }}">
+        <div class="form-group">
+            <label for="price">価格</label>
+            <input type="number" id="price" name="price" value="{{ old('price') }}" required>
         </div>
 
-        <div>
-            <label>説明：</label><br>
-            <textarea name="description">{{ old('description') }}</textarea>
+        <div class="form-group">
+            <label for="description">商品説明</label>
+            <textarea id="description" name="description" rows="3" required>{{ old('description') }}</textarea>
         </div>
 
-        <div>
-            <label>画像：</label>
-            <input type="file" name="image">
+        <div class="form-group">
+            <label for="stock">在庫数</label>
+            <input type="number" id="stock" name="stock" value="{{ old('stock') }}">
         </div>
 
-        <br>
-        <button type="submit">登録する</button>
+        <div class="form-group">
+            <label for="image">商品画像</label>
+            <input type="file" id="image" name="image">
+        </div>
+
+        <div class="form-buttons">
+            <a href="{{ route('items.index') }}" class="btn-back">戻る</a>
+            <button type="submit" class="btn-submit">登録</button>
+        </div>
     </form>
-
-    <br>
-    <a href="{{ route('items.index') }}">一覧に戻る</a>
-</body>
-</html>
+</div>
+@endsection

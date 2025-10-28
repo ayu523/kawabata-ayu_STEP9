@@ -4,15 +4,39 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Order;
+
 
 class ItemController extends Controller
 {
-    public function index()
-    {
-        $items = Item::orderBy('id', 'asc')->get();
-        return view('items.index', compact('items'));
+    public function index(Request $request)
+{
+    // 昇順
+    $query = Item::orderBy('id', 'asc');
+
+    // 商品名キーワード検索
+    if ($request->filled('keyword')) {
+        $query->where('name', 'like', '%' . $request->keyword . '%');
     }
+
+    // 最低価格が入力されていたら
+    if ($request->filled('min_price')) {
+        $query->where('price', '>=', $request->min_price);
+    }
+
+    // 最高価格が入力されていたら
+    if ($request->filled('max_price')) {
+        $query->where('price', '<=', $request->max_price);
+    }
+
+    // 結果を取得
+    $items = $query->get();
+
+    // ビューに
+    return view('items.index', compact('items'));
+}
+
 
     public function create()
     {
@@ -26,6 +50,13 @@ class ItemController extends Controller
             'price' => 'required|integer|min:1',
             'description' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => '商品名は必須です。',
+            'price.required' => '価格は必須です。',
+            'description.required' => '説明は必須です。',
+            'price.numeric' => '価格は数字で入力してください。',
+            'image.image' => '画像ファイルを選択してください。',
+
         ]);
 
         $imagePath = null;
@@ -74,9 +105,16 @@ class ItemController extends Controller
         return redirect()->route('items.show', $item->id)->with('success', '商品情報を更新しました！');
     }
 
-    public function destroy(Item $item)
+    public function destroy($id)
     {
-        //
+        $item = Item::findOrFail($id);
+        // 画像ファイル削除
+        if ($item->image_path && Storage::exists('public/' . $item->image_path)) {
+            Storage::delete('public/' . $item->image_path);
+        }
+        $item->delete();
+
+        return redirect()->route('items.index')->with('success', '商品を削除しました');
     }
 
     public function show($id)

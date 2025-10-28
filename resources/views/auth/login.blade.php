@@ -1,47 +1,54 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.guest')
+@section('title', 'ログイン')
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+@section('content')
+  <h1 class="mb-4" style="font-size:20px;font-weight:600;">ログイン</h1>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+  @if ($errors->any())
+    <div style="color:#b91c1c;background:#fee2e2;padding:10px 12px;border-radius:6px;margin-bottom:12px;">
+      <ul style="margin:0;padding-left:18px;">
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+  <form method="POST" action="{{ route('login') }}" style="max-width:480px;">
+    @csrf
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+    <div style="margin-bottom:12px;">
+      <label for="email">Email</label><br>
+      <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+             style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;">
+    </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+    <div style="margin-bottom:12px;">
+      <label for="password">Password</label><br>
+      <input id="password" type="password" name="password" required
+             style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;">
+    </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+    <div style="margin:12px 0;">
+      <label style="display:inline-flex;align-items:center;gap:6px;">
+        <input type="checkbox" name="remember"> <span>Remember me</span>
+      </label>
+    </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+    {{-- ▼ ボタンとリンクを横並びに --}}
+    <div style="display:flex;align-items:center;gap:14px;margin-top:8px;">
+      @if (Route::has('password.request'))
+        <a href="{{ route('password.request') }}"
+           style="font-size:14px;color:#2563eb;text-decoration:underline;">
+          パスワードをお忘れですか？
+        </a>
+      @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+      <button type="submit"
+              style="display:inline-block;padding:10px 16px;background:#2563eb;color:#fff;border:none;border-radius:8px;">
+        ログイン
+      </button>
+    </div>
+    {{-- ▲ ここまで --}}
+  </form>
+@endsection

@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>購入完了</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>購入が完了しました！</h1>
 
     <h2>{{ $item->name }}</h2>
@@ -17,5 +13,4 @@
 
     <br><br>
     <a href="{{ route('items.index') }}">商品一覧に戻る</a>
-</body>
-</html>
+@endsection

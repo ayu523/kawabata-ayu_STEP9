@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>商品編集</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', '商品編集')
+
+@section('content')
     <h1>商品編集フォーム</h1>
 
     @if ($errors->any())
@@ -33,23 +31,4 @@
 
         <div>
             <label>説明：</label><br>
-            <textarea name="description">{{ old('description', $item->description) }}</textarea>
-        </div>
-
-        <div>
-            <label>画像：</label>
-            <input type="file" name="image">
-            @if($item->image_path)
-                <p>現在の画像：</p>
-                <img src="{{ asset('storage/' . $item->image_path) }}" width="100">
-            @endif
-        </div>
-
-        <br>
-        <button type="submit">更新する</button>
-    </form>
-
-    <br>
-    <a href="{{ route('items.show', $item->id) }}">← 詳細ページに戻る</a>
-</body>
-</html>
+            <textarea name="description">{{ old('description', $item->description)

@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>マイページ</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>{{ $user->name }} さんのマイページ</h1>
 
     <h2>購入履歴</h2>
@@ -32,5 +28,4 @@
 
     <br>
     <a href="{{ route('items.index') }}">商品一覧に戻る</a>
-</body>
-</html>
+@endsection

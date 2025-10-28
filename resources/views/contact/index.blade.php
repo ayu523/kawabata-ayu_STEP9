@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>お問い合わせフォーム</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
     <h1>お問い合わせフォーム</h1>
 
     <form action="{{ route('contact.confirm') }}" method="POST">
@@ -27,5 +23,4 @@
         <br>
         <button type="submit">確認画面へ</button>
     </form>
-</body>
-</html>
+@endsection

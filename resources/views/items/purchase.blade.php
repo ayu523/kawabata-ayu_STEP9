@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>商品購入</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', '商品購入')
+
+@section('content')
     <h1>購入画面</h1>
 
     <h2>{{ $item->name }}</h2>
@@ -25,5 +23,4 @@
 
     <br>
     <a href="{{ route('items.index') }}">← 商品一覧に戻る</a>
-</body>
-</html>
+@endsection
