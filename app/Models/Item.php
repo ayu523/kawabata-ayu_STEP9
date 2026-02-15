@@ -14,7 +14,8 @@ class Item extends Model
         'name',
         'price',
         'description',
-        'image_path', // 画像ファイルのパスを追加
+        'image_path', 
+        'user_id',
     ];
 
     // 商品が持つ「注文履歴」とのリレーション

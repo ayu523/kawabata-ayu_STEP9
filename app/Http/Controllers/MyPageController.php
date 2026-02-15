@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,12 @@ class MyPageController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('mypage.index', compact('user', 'orders'));
+        // ユーザーが出品した商品を取得
+        $items = Item::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+
+    return view('mypage.index', compact('user', 'orders', 'items'));
     }
 }

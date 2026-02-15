@@ -69,6 +69,8 @@ class ItemController extends Controller
             'price' => $validated['price'],
             'description' => $validated['description'],
             'image_path' => $imagePath,
+            'user_id' => auth()->id(),
+
         ]);
 
         return redirect()->route('items.index')->with('success', '商品を登録しました！');
