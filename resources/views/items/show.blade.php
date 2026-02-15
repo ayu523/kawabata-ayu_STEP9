@@ -44,9 +44,8 @@
 
 {{-- ボタン類 --}}
 <a href="{{ route('items.purchase', $item->id) }}" class="btn">購入する</a>
-<a href="{{ route('items.edit', $item->id) }}" class="btn btn-edit">編集する</a>
 
-{{-- お気に入りボタン --}}
+
 @if(Auth::check())
     @php
         $isFavorite = \App\Models\Favorite::where('user_id', Auth::id())
@@ -66,12 +65,6 @@
         </form>
     @endif
 @endif
-
-<form action="{{ route('items.destroy', $item->id) }}" method="POST" style="display:inline;">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="btn btn-delete" onclick="return confirm('本当に削除しますか？')">削除する</button>
-</form>
 
 <br><br>
 <a href="{{ route('items.index') }}">← 一覧に戻る</a>
