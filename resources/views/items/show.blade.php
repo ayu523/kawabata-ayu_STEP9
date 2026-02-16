@@ -42,8 +42,16 @@
 
 <hr>
 
-{{-- ボタン類 --}}
+
 <a href="{{ route('items.purchase', $item->id) }}" class="btn">購入する</a>
+
+@auth.  
+    @if($item->user_id === auth()->id())
+        <a href="{{ route('items.edit', $item->id) }}" class="btn btn-edit">
+            編集する
+        </a>
+    @endif
+@endauth
 
 
 @if(Auth::check())
