@@ -13,27 +13,29 @@ class ItemController extends Controller
     public function index(Request $request)
 {
     // 昇順
-    $query = Item::orderBy('id', 'asc');
+        $query = Item::where('user_id', '!=', auth()->id())
+                      ->orderBy('id', 'asc');
 
-    // 商品名キーワード検索
+
+    // 商品名検索
     if ($request->filled('keyword')) {
         $query->where('name', 'like', '%' . $request->keyword . '%');
     }
 
-    // 最低価格が入力されていたら
+    // 最低価格
     if ($request->filled('min_price')) {
         $query->where('price', '>=', $request->min_price);
     }
 
-    // 最高価格が入力されていたら
+    // 最高価格
     if ($request->filled('max_price')) {
         $query->where('price', '<=', $request->max_price);
     }
 
-    // 結果を取得
+    // 結果
     $items = $query->get();
 
-    // ビューに
+    
     return view('items.index', compact('items'));
 }
 
@@ -89,12 +91,14 @@ class ItemController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:255',
             'price' => 'required|integer|min:1',
+            'stock' => 'required|integer|min:0',
             'description' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $item->name = $validated['name'];
         $item->price = $validated['price'];
+        $item->stock = $validated['stock'];
         $item->description = $validated['description'];
 
         if ($request->hasFile('image')) {
