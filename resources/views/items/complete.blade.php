@@ -1,16 +1,25 @@
 @extends('layouts.app')
 
+@section('title', '購入完了')
+
 @section('content')
-    <h1>購入が完了しました！</h1>
 
-    <h2>{{ $item->name }}</h2>
-    <p>数量：{{ $quantity }}</p>
-    <p>合計金額：¥{{ number_format($total) }}</p>
+<div class="complete-container">
+    <h1>購入が完了しました 🎉</h1>
 
-    @if($item->image_path)
-        <img src="{{ asset('storage/' . $item->image_path) }}" alt="商品画像" width="150">
-    @endif
+    <p><strong>商品名：</strong> {{ $item->name }}</p>
+    <p><strong>購入数：</strong> {{ $quantity }}</p>
+    <p><strong>合計金額：</strong> ¥{{ number_format($total) }}</p>
 
-    <br><br>
-    <a href="{{ route('items.index') }}">商品一覧に戻る</a>
+    <br>
+
+    <a href="{{ route('items.index') }}" class="btn">
+        商品一覧へ戻る
+    </a>
+
+    <a href="{{ route('mypage.index') }}" class="btn">
+        マイページへ
+    </a>
+</div>
+
 @endsection
