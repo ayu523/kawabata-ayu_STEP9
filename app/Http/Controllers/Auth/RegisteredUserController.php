@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -33,14 +34,20 @@ class RegisteredUserController extends Controller
             'name'       => ['required', 'string', 'max:255'],
             'name_kanji' => ['nullable', 'string', 'max:255'],
             'name_kana'  => ['nullable', 'string', 'max:255'],
+            'company_name' => ['required', 'string', 'max:255'],
             'email'      => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password'   => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        
+        $company = Company::firstOrCreate([
+            'name' => $request->company_name,
         ]);
 
         $user = User::create([
             'name'       => $request->name,
-            'name_kanji' => $request->name_kanji,   // ★追加
-            'name_kana'  => $request->name_kana,    // ★追加
+            'name_kanji' => $request->name_kanji,   
+            'name_kana'  => $request->name_kana,
+            'company_id' => $company->id,
             'email'      => $request->email,
             'password'   => Hash::make($request->password),
         ]);

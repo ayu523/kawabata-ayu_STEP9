@@ -27,6 +27,14 @@
             <label for="price">価格</label>
             <input type="number" id="price" name="price" value="{{ old('price') }}" required>
         </div>
+        <div style="margin-bottom:20px;">
+            <label>在庫</label><br>
+            <input type="number"
+                   name="stock"
+                   value="{{ old('stock', 0) }}"
+                   min="0"
+                   style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;">
+        </div>
 
         <div class="form-group">
             <label for="description">商品説明</label>
