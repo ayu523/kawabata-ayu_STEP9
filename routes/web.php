@@ -6,6 +6,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MyPageController;
+use App\Http\Controllers\FavoriteController;
 
 // 商品登録フォーム
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
@@ -17,7 +18,10 @@ Route::get('/items/complete', function () {
 Route::get('/items', [ItemController::class, 'index'])->name('items.index');
 Route::get('/items/{id}', [ItemController::class, 'show'])->name('items.show');
 Route::get('/items/{id}/purchase', [ItemController::class, 'purchase'])->name('items.purchase');
-Route::post('/items/{id}/purchase', [ItemController::class, 'storePurchase'])->name('items.storePurchase');
+Route::post('/items/{id}/purchase', [ItemController::class, 'storePurchase'])
+    ->middleware('auth')
+    ->name('items.storePurchase');
+
 Route::post('/items', [ItemController::class, 'store'])->name('items.store');
 
 // お問い合わせフォーム

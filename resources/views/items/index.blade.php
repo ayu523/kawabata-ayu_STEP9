@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+
+@if(session('success'))
+    <div style="color: green; margin-bottom: 15px;">
+        {{ session('success') }}
+    </div>
+@endif
+
 <style>
     .item-index {
         max-width: 900px;

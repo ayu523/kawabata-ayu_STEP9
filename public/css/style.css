@@ -254,4 +254,30 @@ body {
     margin-top: 20px;
 }
 
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: white;
+    color: #2d7df6;
+    border: 2px solid #2d7df6;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #2d7df6;
+    color: white;
+}
+
+.complete-container {
+    width: 500px;
+    margin: 60px auto;
+    text-align: center;
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 

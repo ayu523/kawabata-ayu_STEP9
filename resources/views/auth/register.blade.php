@@ -40,15 +40,17 @@
                 autocomplete="name" />
             <x-input-error :messages="$errors->get('name_kana')" class="mt-2" />
         </div>
-
+        
+        
         <div class="mt-4">
-            <label for="company_name">会社名</label>
-            <input id="company_name"
-                   type="text"
-                   name="company_name"
-                   value="{{ old('company_name') }}"
-                   class="block mt-1 w-full"
-                   required>
+            <x-input-label for="company_name" :value="__('会社名')" />
+            <x-text-input id="company_name"
+                class="mt-1 block w-full"
+                type="text"
+                name="company_name"
+                :value="old('company_name')"
+                autocomplete="organization" />
+            <x-input-error :messages="$errors->get('company_name')" class="mt-2" />
         </div>
 
 

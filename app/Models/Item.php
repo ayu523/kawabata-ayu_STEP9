@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,14 +14,16 @@ class Item extends Model
     protected $fillable = [
         'name',
         'price',
+        'stock',
         'description',
         'image_path', 
         'user_id',
+        'company_id'
     ];
 
     // 商品が持つ「注文履歴」とのリレーション
-    public function orders()
+    public function company()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(Company::class);
     }
 }
