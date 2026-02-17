@@ -74,7 +74,7 @@ class ItemController extends Controller
         return view('items.edit', compact('item'));
     }
 
-    public function update(UpdateItemReques $request, $id)
+    public function update(UpdateItemRequest $request, $id)
     {
         $item = Item::findOrFail($id);
 
